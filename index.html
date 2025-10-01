@@ -419,7 +419,7 @@
 
                     <div class="download-section">
                         <h3>배포된 앱</h3>
-                        <a href="/download/ios" class="download-link" id="iosDownload" style="display: none;">iOS 앱 다운로드</a>
+                        <a href="#" class="download-link" id="iosDownload" style="display: none;">iOS 앱 설치</a>
                     </div>
                 </div>
             </div>
@@ -504,6 +504,7 @@
                     statusDiv.textContent = '아이폰 앱이 성공적으로 업로드되었습니다!';
                     statusDiv.className = 'status success';
                     statusDiv.style.display = 'block';
+                    setupIOSDownloadLink();
                     document.getElementById('iosDownload').style.display = 'inline-block';
                 } else {
                     const errorData = await response.json();
@@ -516,6 +517,17 @@
             }
         });
 
+        // iOS 다운로드 링크 설정
+        function setupIOSDownloadLink() {
+            const iosDownloadLink = document.getElementById('iosDownload');
+            const protocol = window.location.protocol;
+            const host = window.location.host;
+            const plistUrl = `${protocol}//${host}/download/ios`;
+            
+            // itms-services 프로토콜 사용 (iOS 앱 설치용)
+            iosDownloadLink.href = `itms-services://?action=download-manifest&url=${encodeURIComponent(plistUrl)}`;
+        }
+
         // Check if files exist on page load
         window.addEventListener('load', async () => {
             try {
@@ -526,6 +538,7 @@
 
                 const iosResponse = await fetch('/check/ios');
                 if (iosResponse.ok) {
+                    setupIOSDownloadLink();
                     document.getElementById('iosDownload').style.display = 'inline-block';
                 }
             } catch (error) {

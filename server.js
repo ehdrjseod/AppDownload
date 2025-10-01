@@ -171,7 +171,7 @@ app.get('/download/android', (req, res) => {
     res.download(filePath, file);
 });
 
-// 아이폰 PLIST 파일 다운로드
+// 아이폰 PLIST 파일 제공 (다운로드가 아닌 내용 전송)
 app.get('/download/ios', (req, res) => {
     const files = fs.readdirSync(iosDir);
     const plistFile = files.find(file => file.endsWith('.plist'));
@@ -181,7 +181,9 @@ app.get('/download/ios', (req, res) => {
     }
 
     const plistPath = path.join(iosDir, plistFile);
-    res.download(plistPath, plistFile);
+    // PLIST를 XML로 전송 (iOS가 읽을 수 있도록)
+    res.type('application/xml');
+    res.sendFile(plistPath);
 });
 
 // 아이폰 IPA 파일 다운로드 (PLIST에서 참조용)
