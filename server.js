@@ -7,6 +7,9 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// 프록시 신뢰 설정 (Nginx 등의 리버스 프록시 뒤에 있을 때)
+app.set('trust proxy', true);
+
 // 미들웨어 설정
 app.use(cors());
 app.use(express.json());
