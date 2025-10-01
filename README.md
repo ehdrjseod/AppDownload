@@ -57,3 +57,51 @@ npm start
 - **Frontend**: HTML, CSS, JavaScript
 - **Backend**: Node.js, Express
 - **File Upload**: Multer
+
+## Docker로 실행하기
+
+### Docker Compose 사용 (권장)
+
+```bash
+# 이미지 빌드 및 컨테이너 실행
+docker-compose up -d
+
+# 로그 확인
+docker-compose logs -f
+
+# 중지
+docker-compose down
+
+# 중지 및 볼륨 삭제
+docker-compose down -v
+```
+
+### Docker 직접 사용
+
+```bash
+# 이미지 빌드
+docker build -t app-distribution .
+
+# 컨테이너 실행
+docker run -d \
+  --name app-distribution \
+  -p 3000:3000 \
+  -v $(pwd)/uploads:/app/uploads \
+  app-distribution
+
+# 컨테이너 중지
+docker stop app-distribution
+
+# 컨테이너 삭제
+docker rm app-distribution
+```
+
+## 배포 시 주의사항
+
+### HTTPS 설정
+- iOS 앱 설치를 위해서는 **HTTPS가 필수**입니다
+- Nginx나 Caddy 등의 리버스 프록시를 사용하여 SSL 인증서를 설정하세요
+
+### 볼륨 마운트
+- `uploads` 디렉토리는 컨테이너 외부에 마운트하여 데이터를 영구 보존합니다
+- Docker Compose를 사용하면 자동으로 설정됩니다
