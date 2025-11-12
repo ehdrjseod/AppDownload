@@ -34,16 +34,8 @@ const storage = multer.diskStorage({
         }
     },
     filename: (req, file, cb) => {
-        // 파일 확장자에 따라 파일명 설정
-        let filename;
-        if (file.fieldname === 'androidFile') {
-            filename = `app${path.extname(file.originalname)}`;
-        } else if (file.fieldname === 'ipaFile') {
-            filename = `app.ipa`;
-        } else if (file.fieldname === 'plistFile') {
-            filename = `app.plist`;
-        }
-        cb(null, filename);
+        // 원본 파일명 유지
+        cb(null, file.originalname);
     }
 });
 
@@ -74,12 +66,27 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// 업로드 페이지 라우트
+app.get('/upload', (req, res) => {
+    res.sendFile(path.join(__dirname, 'upload.html'));
+});
+
 // 안드로이드 파일 업로드
 app.post('/upload/android', upload.single('androidFile'), (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ error: '파일이 업로드되지 않았습니다' });
         }
+        
+        // 새로 업로드된 파일을 제외한 기존 파일들 삭제
+        const files = fs.readdirSync(androidDir);
+        files.forEach(file => {
+            if (file !== req.file.filename) {
+                const filePath = path.join(androidDir, file);
+                fs.unlinkSync(filePath);
+            }
+        });
+        
         res.json({ message: '안드로이드 앱이 성공적으로 업로드되었습니다' });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -133,6 +140,16 @@ app.post('/upload/ios',
                 return res.status(400).json({ error: 'IPA 파일은 필수입니다' });
             }
 
+            // 기존 IPA 파일 삭제 (새로 업로드된 파일 제외)
+            const files = fs.readdirSync(iosDir);
+            const newIpaFilename = req.files.ipaFile[0].filename;
+            files.forEach(file => {
+                if (file.endsWith('.ipa') && file !== newIpaFilename) {
+                    const filePath = path.join(iosDir, file);
+                    fs.unlinkSync(filePath);
+                }
+            });
+
             // PLIST 파일이 제공되지 않은 경우 자동 생성
             if (!req.files.plistFile && req.body.autoGeneratePlist === 'true') {
                 // 배열로 들어온 경우 첫 번째 값만 사용
@@ -148,11 +165,29 @@ app.post('/upload/ios',
                 // PLIST 내용 생성
                 const plistContent = generatePlist(appName.trim(), bundleId.trim(), version.trim(), ipaUrl);
 
-                // PLIST 파일 저장
-                const plistPath = path.join(iosDir, 'app.plist');
+                // 기존 PLIST 파일 삭제
+                const plistFiles = files.filter(file => file.endsWith('.plist'));
+                plistFiles.forEach(file => {
+                    const filePath = path.join(iosDir, file);
+                    fs.unlinkSync(filePath);
+                });
+
+                // PLIST 파일 저장 (원본 IPA 파일명 기반으로 생성)
+                const plistFilename = newIpaFilename.replace('.ipa', '.plist');
+                const plistPath = path.join(iosDir, plistFilename);
                 fs.writeFileSync(plistPath, plistContent, 'utf8');
             } else if (!req.files.plistFile) {
                 return res.status(400).json({ error: 'PLIST 파일을 선택하거나 자동 생성 정보를 입력해주세요' });
+            } else {
+                // PLIST 파일이 업로드된 경우 기존 PLIST 파일 삭제
+                const newPlistFilename = req.files.plistFile[0].filename;
+                const plistFiles = files.filter(file => file.endsWith('.plist'));
+                plistFiles.forEach(file => {
+                    if (file !== newPlistFilename) {
+                        const filePath = path.join(iosDir, file);
+                        fs.unlinkSync(filePath);
+                    }
+                });
             }
 
             res.json({ message: '아이폰 앱이 성공적으로 업로드되었습니다' });
@@ -165,13 +200,14 @@ app.post('/upload/ios',
 // 안드로이드 파일 다운로드
 app.get('/download/android', (req, res) => {
     const files = fs.readdirSync(androidDir);
-    if (files.length === 0) {
+    const androidFile = files.find(file => file.endsWith('.apk') || file.endsWith('.aab'));
+    
+    if (!androidFile) {
         return res.status(404).json({ error: '안드로이드 앱 파일이 없습니다' });
     }
 
-    const file = files[0];
-    const filePath = path.join(androidDir, file);
-    res.download(filePath, file);
+    const filePath = path.join(androidDir, androidFile);
+    res.download(filePath, androidFile);
 });
 
 // 아이폰 PLIST 파일 제공 (다운로드가 아닌 내용 전송)
@@ -205,7 +241,9 @@ app.get('/download/ios-ipa', (req, res) => {
 // 파일 존재 여부 확인
 app.get('/check/android', (req, res) => {
     const files = fs.readdirSync(androidDir);
-    if (files.length > 0) {
+    const androidFile = files.find(file => file.endsWith('.apk') || file.endsWith('.aab'));
+    
+    if (androidFile) {
         res.json({ exists: true });
     } else {
         res.status(404).json({ exists: false });

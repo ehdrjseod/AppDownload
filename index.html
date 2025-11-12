@@ -87,163 +87,8 @@
             color: #2c3e50;
         }
 
-        .form-section {
-            margin-bottom: 25px;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: #495057;
-            margin-bottom: 8px;
-        }
-
-        .form-hint {
-            font-size: 12px;
-            color: #6c757d;
-            margin-top: 5px;
-            display: block;
-        }
-
-        .file-input-wrapper {
-            position: relative;
-            margin-bottom: 15px;
-        }
-
-        .file-input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            font-size: 14px;
-            transition: all 0.3s;
-            background: white;
-            cursor: pointer;
-        }
-
-        .file-input:hover {
-            border-color: #667eea;
-        }
-
-        .file-input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .plist-generator {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 15px;
-            border: 2px dashed #dee2e6;
-        }
-
-        .plist-generator h4 {
-            font-size: 14px;
-            font-weight: 600;
-            color: #495057;
-            margin-bottom: 15px;
-        }
-
-        .input-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .text-input {
-            width: 100%;
-            padding: 10px 12px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        .text-input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .upload-btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
-        }
-
-        .android-section .upload-btn {
-            background: linear-gradient(135deg, #3ddc84 0%, #2db872 100%);
-        }
-
-        .android-section .upload-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(61, 220, 132, 0.4);
-        }
-
-        .ios-section .upload-btn {
-            background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
-        }
-
-        .ios-section .upload-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 122, 255, 0.4);
-        }
-
-        .upload-btn:active {
-            transform: translateY(0);
-        }
-
-        .toggle-btn {
-            width: 100%;
-            padding: 12px;
-            border: 2px dashed #dee2e6;
-            border-radius: 10px;
-            background: white;
-            font-size: 14px;
-            font-weight: 600;
-            color: #495057;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: left;
-            display: flex;
-            align-items: center;
-        }
-
-        .toggle-btn:hover {
-            border-color: #667eea;
-            color: #667eea;
-            background: #f8f9fa;
-        }
-
-        .toggle-btn #toggleIcon {
-            margin-right: 8px;
-            transition: transform 0.3s;
-            display: inline-block;
-        }
-
-        .toggle-btn.active #toggleIcon {
-            transform: rotate(90deg);
-        }
-
         .download-section {
             margin-top: 25px;
-            padding-top: 20px;
-            border-top: 2px solid #e9ecef;
         }
 
         .download-section h3 {
@@ -277,38 +122,6 @@
             font-size: 16px;
         }
 
-        .status {
-            margin-top: 15px;
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-size: 14px;
-            display: none;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .status.success {
-            background-color: #d1f2eb;
-            color: #0c5a4a;
-            border-left: 4px solid #28a745;
-        }
-
-        .status.error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border-left: 4px solid #dc3545;
-        }
-
         @media (max-width: 768px) {
             .platforms {
                 grid-template-columns: 1fr;
@@ -331,8 +144,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>모바일 앱 배포 센터</h1>
-            <p>간편하고 안전한 앱 배포 관리 시스템</p>
+            <h1>모바일 앱 다운로드</h1>
+            <p>최신 버전의 앱을 다운로드하세요</p>
         </div>
 
         <div class="content">
@@ -344,23 +157,10 @@
                         <div class="platform-title">Android</div>
                     </div>
 
-                    <form id="androidForm" enctype="multipart/form-data">
-                        <div class="form-section">
-                            <label class="form-label" for="androidFile">앱 파일 업로드</label>
-                            <div class="file-input-wrapper">
-                                <input type="file" id="androidFile" name="androidFile" accept=".apk,.aab" class="file-input" required>
-                            </div>
-                            <span class="form-hint">APK 또는 AAB 파일을 선택하세요</span>
-                        </div>
-
-                        <button type="submit" class="upload-btn">업로드</button>
-                    </form>
-
-                    <div id="androidStatus" class="status"></div>
-
                     <div class="download-section">
                         <h3>배포된 앱</h3>
                         <a href="/download/android" class="download-link" id="androidDownload" style="display: none;">Android 앱 다운로드</a>
+                        <p id="androidNoFile" style="color: #6c757d; font-size: 14px; margin-top: 10px;">업로드된 앱이 없습니다</p>
                     </div>
                 </div>
 
@@ -371,55 +171,10 @@
                         <div class="platform-title">iOS</div>
                     </div>
 
-                    <form id="iosForm" enctype="multipart/form-data">
-                        <div class="form-section">
-                            <label class="form-label" for="ipaFile">IPA 파일 업로드</label>
-                            <div class="file-input-wrapper">
-                                <input type="file" id="ipaFile" name="ipaFile" accept=".ipa" class="file-input" required>
-                            </div>
-                            <span class="form-hint">iOS 앱 패키지 파일 (IPA)</span>
-                        </div>
-
-                        <div class="form-section">
-                            <button type="button" id="togglePlistUpload" class="toggle-btn">
-                                <span id="toggleIcon">▶</span> PLIST 파일 직접 업로드
-                            </button>
-                        </div>
-
-                        <div id="plistUploadSection" class="form-section" style="display: none;">
-                            <label class="form-label" for="plistFile">PLIST 파일</label>
-                            <div class="file-input-wrapper">
-                                <input type="file" id="plistFile" name="plistFile" accept=".plist" class="file-input">
-                            </div>
-                            <span class="form-hint">기존 PLIST 파일을 업로드하세요</span>
-                        </div>
-
-                        <div id="plistGenerator" class="plist-generator" style="display: block;">
-                            <h4>📋 앱 정보 입력</h4>
-                            <div class="input-grid">
-                                <div class="input-group">
-                                    <label class="form-label" for="appName">앱 이름</label>
-                                    <input type="text" id="appName" name="appName" placeholder="My App" class="text-input">
-                                </div>
-                                <div class="input-group">
-                                    <label class="form-label" for="bundleId">Bundle ID</label>
-                                    <input type="text" id="bundleId" name="bundleId" placeholder="com.example.app" class="text-input">
-                                </div>
-                                <div class="input-group">
-                                    <label class="form-label" for="version">버전</label>
-                                    <input type="text" id="version" name="version" placeholder="1.0.0" class="text-input">
-                                </div>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="upload-btn">업로드</button>
-                    </form>
-
-                    <div id="iosStatus" class="status"></div>
-
                     <div class="download-section">
                         <h3>배포된 앱</h3>
                         <a href="#" class="download-link" id="iosDownload" style="display: none;">iOS 앱 설치</a>
+                        <p id="iosNoFile" style="color: #6c757d; font-size: 14px; margin-top: 10px;">업로드된 앱이 없습니다</p>
                     </div>
                 </div>
             </div>
@@ -427,95 +182,23 @@
     </div>
 
     <script>
-        // Android upload
-        document.getElementById('androidForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            const statusDiv = document.getElementById('androidStatus');
-
-            try {
-                const response = await fetch('/upload/android', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (response.ok) {
-                    statusDiv.textContent = '안드로이드 앱이 성공적으로 업로드되었습니다!';
-                    statusDiv.className = 'status success';
-                    statusDiv.style.display = 'block';
-                    document.getElementById('androidDownload').style.display = 'inline-block';
-                } else {
-                    throw new Error('업로드 실패');
-                }
-            } catch (error) {
-                statusDiv.textContent = '업로드 중 오류가 발생했습니다: ' + error.message;
-                statusDiv.className = 'status error';
-                statusDiv.style.display = 'block';
-            }
-        });
-
-        // PLIST 파일 업로드 섹션 토글
-        document.getElementById('togglePlistUpload').addEventListener('click', function() {
-            const plistUploadSection = document.getElementById('plistUploadSection');
-            const plistGenerator = document.getElementById('plistGenerator');
-            const toggleBtn = this;
+        // OS 감지 함수
+        function detectOS() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
             
-            if (plistUploadSection.style.display === 'none') {
-                // PLIST 업로드 섹션 표시
-                plistUploadSection.style.display = 'block';
-                plistGenerator.style.display = 'none';
-                toggleBtn.classList.add('active');
-            } else {
-                // PLIST 업로드 섹션 숨김
-                plistUploadSection.style.display = 'none';
-                plistGenerator.style.display = 'block';
-                toggleBtn.classList.remove('active');
-                // PLIST 파일 선택 초기화
-                document.getElementById('plistFile').value = '';
+            // iOS 감지
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                return 'iOS';
             }
-        });
-
-        // iOS upload
-        document.getElementById('iosForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            const statusDiv = document.getElementById('iosStatus');
-
-            // PLIST 파일이 선택되지 않은 경우 자동 생성 정보 추가
-            const plistFileInput = document.getElementById('plistFile');
-            if (plistFileInput.files.length === 0) {
-                const appName = document.getElementById('appName').value || 'My App';
-                const bundleId = document.getElementById('bundleId').value || 'com.example.app';
-                const version = document.getElementById('version').value || '1.0.0';
-
-                formData.append('autoGeneratePlist', 'true');
-                formData.append('appName', appName);
-                formData.append('bundleId', bundleId);
-                formData.append('version', version);
+            
+            // Android 감지
+            if (/android/i.test(userAgent)) {
+                return 'Android';
             }
-
-            try {
-                const response = await fetch('/upload/ios', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (response.ok) {
-                    statusDiv.textContent = '아이폰 앱이 성공적으로 업로드되었습니다!';
-                    statusDiv.className = 'status success';
-                    statusDiv.style.display = 'block';
-                    setupIOSDownloadLink();
-                    document.getElementById('iosDownload').style.display = 'inline-block';
-                } else {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || '업로드 실패');
-                }
-            } catch (error) {
-                statusDiv.textContent = '업로드 중 오류가 발생했습니다: ' + error.message;
-                statusDiv.className = 'status error';
-                statusDiv.style.display = 'block';
-            }
-        });
+            
+            // 그 외 (PC 등)
+            return 'Other';
+        }
 
         // iOS 다운로드 링크 설정
         function setupIOSDownloadLink() {
@@ -528,18 +211,44 @@
             iosDownloadLink.href = `itms-services://?action=download-manifest&url=${encodeURIComponent(plistUrl)}`;
         }
 
+        // OS에 따라 섹션 표시/숨김
+        function filterPlatformSections() {
+            const os = detectOS();
+            const androidSection = document.querySelector('.android-section');
+            const iosSection = document.querySelector('.ios-section');
+            
+            if (os === 'Android') {
+                // Android 기기: Android 섹션만 표시
+                androidSection.style.display = 'block';
+                iosSection.style.display = 'none';
+            } else if (os === 'iOS') {
+                // iOS 기기: iOS 섹션만 표시
+                androidSection.style.display = 'none';
+                iosSection.style.display = 'block';
+            } else {
+                // PC 등: 둘 다 표시
+                androidSection.style.display = 'block';
+                iosSection.style.display = 'block';
+            }
+        }
+
         // Check if files exist on page load
         window.addEventListener('load', async () => {
+            // OS에 따라 섹션 필터링
+            filterPlatformSections();
+            
             try {
                 const androidResponse = await fetch('/check/android');
                 if (androidResponse.ok) {
-                    document.getElementById('androidDownload').style.display = 'inline-block';
+                    document.getElementById('androidDownload').style.display = 'inline-flex';
+                    document.getElementById('androidNoFile').style.display = 'none';
                 }
 
                 const iosResponse = await fetch('/check/ios');
                 if (iosResponse.ok) {
                     setupIOSDownloadLink();
-                    document.getElementById('iosDownload').style.display = 'inline-block';
+                    document.getElementById('iosDownload').style.display = 'inline-flex';
+                    document.getElementById('iosNoFile').style.display = 'none';
                 }
             } catch (error) {
                 console.log('파일 확인 중 오류:', error);
